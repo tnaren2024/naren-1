@@ -1,0 +1,165 @@
+import { test, expect } from "@playwright/test"; 
+import consumerFromData from "../../data/consumerFromData.json";
+import HomePage from "../../pages/commonPage/homePage.js";
+import ConsumerRegistionPage from "../../pages/consumerPage/consumerPage.js";
+import { CONSUMER_RESGISTRATION_URL } from "../../data/Constant/constent.js";
+
+test.describe("Consumer Details and Registration Page Validation", () => {
+  let page;
+  let homePage;
+  let consumerRegistionPage;
+
+  test.beforeEach(async ({ browser }) => {
+    page = await browser.newPage();
+    await page.goto("https://hyperdrive-dev.aexp.com/");
+    homePage = new HomePage(page);
+    await homePage.login("babu", "Hyperdrive@UI@5814");
+    await page.waitForLoadState("domcontentloaded");
+  });
+
+  async function navigateToConsumerRegistration() {
+    await homePage.profile();
+    await homePage.selectConsumer();
+    await homePage.addnewRegistration();
+    consumerRegistionPage = new ConsumerRegistionPage(page);
+  }
+
+  consumerFromData.forEach(({ description, data, expected }) => {
+    test(description, async () => {
+      const randomSuffix = Math.floor(Math.random() * 1000 + 1);
+      await navigateToConsumerRegistration();
+      
+      await consumerRegistionPage.registerNewConsumer(
+        `${data.name}${randomSuffix}`,
+        data.description,
+        data.readWriteGroup,
+        data.emailDlAddress
+      );
+
+      await page.waitForTimeout(2000);
+      await validateConsumerRegistration(expected.validationType);
+    });
+  });
+
+  async function validateConsumerRegistration(validationType) {
+    const validationMessages = {
+      success: () => expect.soft(page).toHaveURL("https://hyperdrive-dev.aexp.com/consumer/dashboard/addparticipant"),
+      "Name is too long": async () => validateErrorMessage(consumerRegistionPage.getLongConsumerNameError(), "Name is too long"),
+      "Description is too long": async () => expect.soft(await consumerRegistionPage.getLongDescriptionError()).toContain("Description is too long"),
+      "Email should be @aexp.com": async () => expect.soft(await consumerRegistionPage.getInvalidEmailError()).toContain("Email should be @aexp.com"),
+      "Invalid IIQ Group": async () => expect.soft(await consumerRegistionPage.getInvalidIIQGroupError()).toContain("Invalid IIQ Group"),
+      "Group ID not found in IIQ": async () => expect.soft(await consumerRegistionPage.getInvalidIIQGroupError()).toContain("Group ID not found in IIQ."),
+      "Value cannot be empty": async () => expect.soft(await consumerRegistionPage.getValueCannotBeEmptyError()).toContain("The value cannot be empty."),
+    };
+
+    if (validationMessages[validationType]) {
+      await validationMessages[validationType]();
+    } else {
+      throw new Error(`Unhandled validation type: ${validationType}`);
+    }
+  }
+
+  async function validateErrorMessage(actualMessagePromise, expectedMessage) {
+    const actualMessage = await actualMessagePromise;
+    console.log("Actual message:", actualMessage);
+    await expect.soft(actualMessage).toContain(expectedMessage);
+  }
+
+  test("Verify user action menu", async () => {
+    await homePage.profile();
+    await homePage.userActionMenuButtonVisiable();
+  });
+
+  test("Verify Registration Page URLs", async () => {
+    await homePage.profile();
+    await homePage.clickEdit();
+
+    const expectedUrls = Object.values(CONSUMER_RESGISTRATION_URL);
+    const selectors = [
+      consumerRegistionPage.hyperdriveDoc_Loc,
+      consumerRegistionPage.iiqDoc_Loc,
+      consumerRegistionPage.iiqDoc_Loc2,
+      consumerRegistionPage.readWriteUrl_Loc,
+      consumerRegistionPage.readOnlyUrl_Loc1,
+      consumerRegistionPage.emailDistributionUrl_Loc,
+    ];
+
+    const urls = await homePage.docsCaptureLinks(selectors);
+    urls.forEach((url, index) => {
+      await expect.soft(url).toBe(expectedUrls[index]);
+    });
+  });
+
+  test("Verify disabled validate buttons before consumer registration", async () => {
+    await navigateToConsumerRegistration();
+    
+    const count = await consumerRegistionPage.validatebtn_Loc.count();
+    console.log("Total number of disabled validate buttons:", count);
+
+    for (let i = 0; i < count; i++) {
+      await expect.soft(consumerRegistionPage.validatebtn_Loc.nth(i)).toBeDisabled();
+    }
+    await expect.soft(consumerRegistionPage.submitBtnLocator).toBeDisabled();
+  });
+
+  test("Verify empty name input", async () => {
+    await navigateToConsumerRegistration();
+    await validateInputAndExpectError("  ", consumerRegistionPage.valueCannotBeEmptyError);
+  });
+
+  async function validateInputAndExpectError(inputValue, errorMessageLocator) {
+    await consumerRegistionPage.consumerName.fill(inputValue);
+    await consumerRegistionPage.nameValidateBtn.click();
+    await expect.soft(errorMessageLocator).toBeVisible();
+  }
+
+  // New URL validation test cases
+  const urlTestCases = [
+    {
+      description: "Test valid Hyperdrive document URL",
+      url: "https://hyperdrive-dev.aexp.com/documents",
+      expected: "https://hyperdrive-dev.aexp.com/documents"
+    },
+    {
+      description: "Test valid IIQ document URL",
+      url: "https://iiq.aexp.com/documents",
+      expected: "https://iiq.aexp.com/documents"
+    },
+    {
+      description: "Test valid read-write URL",
+      url: "https://hyperdrive-dev.aexp.com/read-write",
+      expected: "https://hyperdrive-dev.aexp.com/read-write"
+    },
+    {
+      description: "Test valid read-only URL",
+      url: "https://hyperdrive-dev.aexp.com/read-only",
+      expected: "https://hyperdrive-dev.aexp.com/read-only"
+    },
+    {
+      description: "Test valid email distribution URL",
+      url: "https://hyperdrive-dev.aexp.com/email-distribution",
+      expected: "https://hyperdrive-dev.aexp.com/email-distribution"
+    },
+    {
+      description: "Test invalid URL format",
+      url: "invalid-url-format",
+      expected: "Invalid URL"
+    }
+  ];
+
+  urlTestCases.forEach(({ description, url, expected }) => {
+    test(description, async () => {
+      await homePage.profile();
+      await consumerRegistionPage.checkUrl(url); // Assume this method checks the URL format
+      if (expected === "Invalid URL") {
+        await expect(page).toHaveURL(/invalid-url-format/);
+      } else {
+        await expect(page).toHaveURL(expected);
+      }
+    });
+  });
+
+  test.afterEach(async () => {
+    await homePage.quit();
+  });
+});
