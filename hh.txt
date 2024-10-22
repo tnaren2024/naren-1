@@ -162,4 +162,65 @@ test.describe("Consumer Details and Registration Page Validation", () => {
   test.afterEach(async () => {
     await homePage.quit();
   });
-});
+});test("Verified background color of Name ", async () => {
+    await navigateToConsumerRegistration();
+    consumerRegistionPage = new ConsumerRegistionPage(page);
+    await consumerRegistionPage.consumerName("test");
+    await consumerRegistionPage.consumerNameValidateLocator.click();
+    await page.waitForTimeout(2000);
+    await consumerRegistionPage.Name_Color.click();
+    const element = await consumerRegistionPage.Name_Color;
+    await homePage.backGroundColor(element);
+  });
+export const PRODUCER_DASHBOARD_TEXT={
+    INGRESS:"Below you can find the constraints you have created in Hyperdrive. Constraints determine where Hyperdrive can perform processing. For additional help or more information, please visit the Hyperdrive documentation.",
+    PROCESSING:"Below you can find the workflows you have created for processing events in Hyperdrive. For additional help or more information, please visit the Hyperdrive documentation.",
+    SOURCE:"Below you can find the sources from the schemas that you have registered to synchronize with Hyperdrive from Schema Factory. For additional help or more information, please visit the Hyperdrive documentation.",   
+};
+export const PRODUCER_RESGISTRATION_URL={
+    PRODUCER_RESGISTRATION_DOCS:'https://spaces.aexp.com/teams/hyperdrive/SitePages/Hyperdrive-3-Customer-Registrations.aspx#producer',
+    IIQ_DOCUMENTION_DOCS :'https://iiq.aexp.com/iam/home.jsf',
+    CAR_ID_DOCS :'https://central.aexp.com/',
+    RESGISTRATION_IIQ_DOCS :"https://iiq.aexp.com/iam/home.jsf",
+    READ_WRIGHT_GROUP_DOCS:"https://iiq.aexp.com/",
+    READ_ONLY_GROUP_DOCS:"https://iiq.aexp.com/",
+    EMAIL_DISTRIBUTION_DOCS:"https://mygroups.intra.aexp.com/IdentityManagement/aspx/groups/AllDLs.aspx",
+    SLA_DOCS_URL:"https://spaces.aexp.com/teams/hyperdrive/SitePages/Hyperdrive-3-SLAs.aspx"
+};
+export const ACM_RESGISTRATION_URL={
+    ACM_RESGISTRATION_DOCS:'https://spaces.aexp.com/teams/hyperdrive/SitePages/Hyperdrive-3-Customer-Registrations.aspx#access-control-manager',
+    IIQ_DOCUMENTION_DOCS :'https://iiq.aexp.com/iam/home.jsf',    
+    RESGISTRATION_IIQ_DOCS :"https://iiq.aexp.com/iam/home.jsf",
+    READ_ONLY_GROUP_DOCS:"https://iiq.aexp.com/",
+    EMAIL_DISTRIBUTION_DOCS:"https://mygroups.intra.aexp.com/IdentityManagement/aspx/groups/AllDLs.aspx"    
+};
+
+export const PRODUCER_RESGISTRATION_TEXT={
+    //IMPORTENT_TEXT_NOTE_DISCRIPTION_PART1:"By registering as a producer, you agree that you are not using Hyperdrive for batch data (e.g. data that is not realtime), application logging, or any other work that is not customer-focused.",
+    IMPORTENT_TEXT_NOTE_DISCRIPTION_PART2:"After registering a new producer, please contact Hyperdrive Product Support to schedule the alignment of processing.",
+    PRODUCER_NAME_TEXT_DISCRIPTION:"Make your name as descriptive as possible so you can easily identify the registration in the future. This name must be unique.",
+    PRODUCER_RESGISTRATION_IIQ_GROUP_TEXT:"In order to register a new producer, you must first tell us which IIQ groups this registration belongs to. IIQ groups determine Hyperdrive’s access control. Users must be members of the associated group in order to have the properly aligned access for that group. If you have questions about the IIQ process, please see the IIQ documentation.",
+    READ_WRIGHT_GROUP_TEXT_DISCRIPTION:"This group has read/write access to configurations and other artifacts that control processing, e.g. ingress channel configurations, schema registrations, workflows, etc. You need to be a member of the IIQ group and not just a custodian. If you have questions about the IIQ process, please see the IIQ documentation.",
+    READ_ONLY_GROUP_TEXT_DISCRIPTION:"This group has read only access to configurations and other artifacts that control processing, e.g. ingress channel configurations, schema registrations, workflows, etc.",
+}
+
+export const HYPERDRIVE_SLA={
+     SLA_TEXT:"Service Level Agreement",
+}
+
+export const CONSUMER_RESGISTRATION_TEXT={
+    //IMPORTENT_TEXT_NOTE_DISCRIPTION_PART1:"By registering as a producer, you agree that you are not using Hyperdrive for batch data (e.g. data that is not realtime), application logging, or any other work that is not customer-focused.",
+    //IMPORTENT_TEXT_NOTE_DISCRIPTION_PART2:"After registering a new producer, please contact Hyperdrive Product Support to schedule the alignment of processing.",
+    CONSUMER_NAME_TEXT_DISCRIPTION:"Make your name as descriptive as possible so you can easily identify the use case in the future. This name must be unique to your consumer registration.",
+    CONSUMER_RESGISTRATION_IIQ_GROUP_TEXT:"In order to register a new consumer, you must first tell us which IIQ groups this registration belongs to. IIQ groups determine Hyperdrive’s access control. Users must be members of the associated group in order to have the properly aligned access for that group. If you have questions about the IIQ process, please see the IIQ documentation.",
+    READ_WRIGHT_GROUP_TEXT_DISCRIPTION:"This group has read/write access to configurations and other artifacts that control processing, e.g. ingress channel configurations, schema registrations, workflows, etc. You need to be a member of the IIQ group and not just a custodian. If you have questions about the IIQ process, please see the IIQ documentation.",
+    READ_ONLY_GROUP_TEXT_DISCRIPTION:"This group has read only access to configurations and other artifacts that control processing, e.g. ingress channel configurations, schema registrations, workflows, etc.",
+}
+export const CONSUMER_RESGISTRATION_URL={
+    CONSUMER_RESGISTRATION_DOCS:'https://spaces.aexp.com/teams/hyperdrive/SitePages/Hyperdrive-3-Customer-Registrations.aspx#producer',
+    IIQ_DOCUMENTION_DOCS :'https://iiq.aexp.com/iam/home.jsf',
+    RESGISTRATION_IIQ_DOCS :"https://spaces.aexp.com/teams/hyperdrive/SitePages/Hyperdrive-3-Customer-Registrations.aspx#consumer",
+    READ_WRIGHT_GROUP_DOCS:"https://iiq.aexp.com/",
+    READ_ONLY_GROUP_DOCS:"https://iiq.aexp.com/",
+    EMAIL_DISTRIBUTION_DOCS:"https://mygroups.intra.aexp.com/IdentityManagement/aspx/groups/AllDLs.aspx"
+};
