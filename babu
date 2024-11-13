@@ -1,0 +1,890 @@
+consumerUsecaseTest.spec.js
+import { test, expect, page, webkit, locator } from "@playwright/test";
+import HomePage from "../../pages/commonPage/homePage.js";
+import { CONSUMER_DASHBOARD_TEXT } from "../../data/Constant/constent.js";
+import ConsumerDashboardPage from "../../pages/consumerPage/consumerDashboardPage.js";
+
+test.describe("Consumer Dashboard validation", () => {
+  let page;
+  test.beforeEach(async ({ browser }) => {
+    page = await browser.newPage();
+    await page.goto("https://hyperdrive-dev.aexp.com/");
+    const homePage = new HomePage(page);
+    await homePage.login("babu", "Hyperdrive@UI@5814");
+    await page.waitForLoadState("domcontentloaded");
+    await homePage.profile();
+    await homePage.selectConsumer();
+    await homePage.selectExistingConsumer();
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForTimeout(2000);
+    await homePage.clickDashboard();
+  });
+
+
+  // test("Verified Consumer Dashboard tab text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndashboardTab();
+  //   let actualMsg = await consumerDashboardPage.getConsumerDashboardTabText();
+  //   expect.soft(actualMsg).toContain("Consumer Dashboard");
+  // });
+
+
+  // test("Verified Add New Use Case tab text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndashboardTab();
+  //   let actualMsg = await consumerDashboardPage.getUseCaseNameText();
+  //   expect.soft(actualMsg).toContain("Add New Use Case");
+  // });
+  // test("Verified expandAllText text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndashboardTab();
+  //   let actualMsg = await consumerDashboardPage.getexpandAllText();
+  //   expect.soft(actualMsg).toContain("Expand All");
+  // });
+
+  // test("Verified collapseAllText text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndashboardTab();
+  //   let actualMsg = await consumerDashboardPage.getcollapseAllText();
+  //   expect.soft(actualMsg).toContain("Collapse");
+  // });
+
+  // test("Verified DOCUMENTATION tab text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndocumentationTab();
+  //   let actualMsg = await consumerDashboardPage.getConsumerDocumentTabText();
+  //   expect.soft(actualMsg).toContain("DOCUMENTATION");
+  // });
+
+  // test("Verified add new constraint", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('#useCaseName').fill('babu3');
+  //   await page.locator('#multiselect-4').click();
+  //   await page.locator('#totalAmt').waitFor({ state: "visible" });
+  //   await page.locator('xpath=//label[normalize-space()="Revenue"]/..//label[normalize-space()="Revenue"]').check();
+  //   await page.locator('#totalAmt').waitFor({ state: "visible" });
+  //   await page.locator('#totalAmt').click();
+  //   await page.locator('#totalAmt').fill('5555');
+  //   await page.locator('#projectDetail').fill('https://hyperdrive-dev.aexp.com/')
+  //   await consumerDashboardPage.clickOnAddBtn();
+
+  //  });
+
+  //  test("Verified Add Use Case Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Add Use Case"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Add Use Case Under Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Please provide your use case details below. For ad")]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified Add identify Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Identification"]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified identify Under Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Enter details to help people identify this use cas")]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified Usecase  Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('#useCaseName')).toBeVisible();
+ 
+  //  });
+
+  
+  //  test("Verified Usecase Under Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Make your name as descriptive as possible so you c")]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified Experimental Mode Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Experimental Mode"]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified Experimental Mode under Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Experimental use cases allow for rapid exploration")]')).toBeVisible();
+  //  });
+
+  //  test("Verified Use Case Impact Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Use Case Impact"]')).toBeVisible();
+
+  //  });
+
+  //  test("Verified Impact Categories Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//label[normalize-space()="Impact Categories"]')).toBeVisible();
+
+  //  });
+
+  //  test("Verified Annual Amount of Impact Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//label[normalize-space()="Annual Amount of Impact (in USD)"]')).toBeVisible();
+
+  //  });
+
+  //  test("Verified Dollar amount of impact Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[normalize-space()="Dollar amount of impact (in millions)"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Additional Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Additional Details"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Please share links to your project Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Please share links to your project’s existing docu")]')).toBeVisible();
+  //  });
+
+  //  test("Verified Documentation Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//label[normalize-space()="Project Documentation"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Enter a link to your project Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Enter a link to your project’s documentation")]')).toBeVisible();
+  //  });
+  //  test("Verified projectDetail Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('#projectDetail')).toBeVisible();
+  //  });
+
+  //  test("Verified archDoc Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('#archDoc')).toBeVisible();
+  //  });
+
+  //  test("Verified Architecture Documentation part Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//label[normalize-space()="Architecture Documentation (Optional)"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Enter a link to your project’s architecture Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Enter a link to your project’s architecture docume")]')).toBeVisible();
+  //  });
+
+  //  test("Negative Name is too long Verified Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('#useCaseName').fill('babu3aadfadfasdfasdfasdfasdfasdfasdfasdfadsfasdffff');
+  //   await page.locator('#multiselect-4').click();
+  //   await expect(page.locator('xpath=//span[normalize-space()="Name is too long"]')).toBeVisible();
+  //  });
+
+   
+
+  //  test("Negative The value must be less than 10,000Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('#useCaseName').fill('babu44');
+  //   await page.locator('#totalAmt').click();
+  //   await page.locator('#totalAmt').fill('55556767676')
+  //   await page.locator('#multiselect-4').click();
+  //   await expect(page.locator('xpath=//span[normalize-space()="The value must be less than 10,000."]')).toBeVisible();
+  //  });
+
+  //  test("Negative Please enter a correct link with ending .aexp.com text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('#projectDetail').fill('https://mail.google.com/')
+  //   await page.locator('#totalAmt').click();
+  //   await expect(page.locator('xpath=//span[normalize-space()="Please enter a correct link with ending .aexp.com"]')).toBeVisible();
+  //  });
+//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+  //  test("Click on the View Use Case", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('(//button[normalize-space()="View Use Case"])[1]').click();
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Use Case Details"]')).toBeVisible();
+  //  });
+
+  //  test("Click on the Edit Use Case", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('(//button[normalize-space()="View Use Case"])[1]').click();
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Use Case Details"]')).toBeVisible();
+  //   await page.locator('xpath=//h1[normalize-space()="Use Case Details"]//following::*[name()="path"]').click();
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Edit Use Case"]')).toBeVisible();
+    
+  //  });
+
+  //  test("Verified Left Side Use Case Details Header", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('(//button[normalize-space()="View Use Case"])[1]').click();
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Use Case Details"]')).toBeVisible();
+  //   await page.locator('xpath=//h1[normalize-space()="Use Case Details"]//following::*[name()="path"]').click();
+  //   await expect(page.locator('xpath=//button[normalize-space()="Use Case Details"]')).toBeVisible();
+    
+  //  });
+
+  //  test("Verified Left Side accessControlNavItem Header", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('(//button[normalize-space()="View Use Case"])[1]').click();
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Use Case Details"]')).toBeVisible();
+  //   await page.locator('xpath=//h1[normalize-space()="Use Case Details"]//following::*[name()="path"]').click();
+  //   await expect(page.locator('#accessControlNavItem')).toBeVisible();
+    
+  //  });
+
+ 
+  //  test("Verified Left Side accessItem Header", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('(//button[normalize-space()="View Use Case"])[1]').click();
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Use Case Details"]')).toBeVisible();
+  //   await page.locator('xpath=//h1[normalize-space()="Use Case Details"]//following::*[name()="path"]').click();
+  //   await page.locator('#accessControlNavItem').click();
+  //  // await page.locator('xpath=//button[@id="accessControlNavItem"]/..//ul').click();
+    
+  //  });
+
+  //  test("Verified Left Side Request Access ", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('(//button[normalize-space()="View Use Case"])[1]').click();
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Use Case Details"]')).toBeVisible();
+  //   await page.locator('xpath=//h1[normalize-space()="Use Case Details"]//following::*[name()="path"]').click();
+  //   await page.locator('#accessControlNavItem').click();
+  //   await page.locator('xpath=//button[@id="accessControlNavItem"]/..//ul').click();
+    
+  //  });
+   
+  //  test("Verified Define Use Case Purpose Header", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('(//button[normalize-space()="View Use Case"])[1]').click();
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Use Case Details"]')).toBeVisible();
+  //   await page.locator('xpath=//h1[normalize-space()="Use Case Details"]//following::*[name()="path"]').click();
+  //   await page.locator('#accessControlNavItem').click();
+  //   await page.locator('xpath=//button[@id="accessControlNavItem"]/..//ul').click();
+  //   await page.locator('xpath=//button[@id="accessControlNavItem"]//following::span[@class=" dls-bright-blue "]').click();
+  //   await page.waitForLoadState("domcontentloaded");
+    
+  //  });
+
+   test("Verified Define Use Case Purpose Header and Click Next", async () => { 
+    const consumerDashboardPage = new ConsumerDashboardPage(page);
+    await page.waitForLoadState("domcontentloaded");
+    await page.locator('(//button[normalize-space()="View Use Case"])[1]').click();
+    await page.locator('#accessControlNavItem').click();
+    await page.locator('xpath=//span[@class=" dls-bright-blue "]').click();
+    await page.waitForLoadState("domcontentloaded");
+    await page.locator('#description').fill('babu8889');
+    await page.locator('#carId').fill('500000138');
+    await page.locator('#valBtn').click();
+    await page.locator('xpath=//button[normalize-space()="Next"]').click();
+    await page.waitForLoadState("domcontentloaded");
+    await page.locator('xpath=//span[@class="css-kpno8m"]').click();
+    await expect(page.locator('xpath=//span[@class="css-kpno8m"]')).toBeVisible();
+
+    await page.locator('#location').click();
+    await page.locator('#location').waitFor({ state: "visible" });
+    await page.locator('#location').selectOption({ value: "Global Processing" });
+    await page.locator('#searchId').click();
+    await page.waitForLoadState("domcontentloaded");
+    //await page.locator('xpath=(//button[@id="select_source_btn"])').nth(1).click();
+    await page.locator('(//button[@id="select_source_btn"])[1]').click();
+   // await page.locator('xpath=//button[normalize-space()="Selected"]').click();
+    await page.locator('xpath=//*[@id="nextBtn"]/span').click();
+    await page.waitForLoadState("domcontentloaded");
+    
+
+    await page.locator('xpath=//div[@class="pad-2 dls-gray-02-bg flex flex-column stack cep-request-access__accessControlManager__cardsMaxHeight___3YRpk col-md-12"]//div[1]//div[1]//div[1]//div[2]//button[2]//preceding::button[@id="select_source_btn"]').click();
+    await page.locator('xpath=//*[@id="nextBtn"]/span').click();
+    await page.waitForLoadState("domcontentloaded");
+   // await page.locator('xpath=//*[@id="nextBtn"]/span').click();
+   // await page.waitForLoadState("domcontentloaded");
+    await page.locator('xpath=//span[@class="css-m6uub0"]').click();
+    await page.waitForLoadState("domcontentloaded");
+   //(//button[@id='select_source_btn'])[1]
+
+   //(//button[@id='select_source_btn'])[2]
+
+
+//*[@id="nextBtn"]/span
+    
+   });
+
+  //  test("Verified Select Source(s) & Event Type(s) and Click Next", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('(//button[normalize-space()="View Use Case"])[1]').click();
+  //   await page.locator('#accessControlNavItem').click();
+  //   await page.locator('xpath=//span[@class=" dls-bright-blue "]').click();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('#description').fill('babu');
+  //   await page.locator('#carId').fill('500000138');
+  //   await page.locator('#valBtn').click();
+  //   await page.locator('xpath=//button[normalize-space()="Next"]').click();
+  //   await page.waitForLoadState("domcontentloaded");
+    
+  //  });
+
+});
+//==================================================
+consumerDashboardTest.spec.js
+import { test, expect, page, webkit, locator } from "@playwright/test";
+import HomePage from "../../pages/commonPage/homePage.js";
+import { CONSUMER_DASHBOARD_TEXT } from "../../data/Constant/constent.js";
+import ConsumerDashboardPage from "../../pages/consumerPage/consumerDashboardPage.js";
+
+test.describe("Consumer Dashboard validation", () => {
+  let page;
+  test.beforeEach(async ({ browser }) => {
+    page = await browser.newPage();
+    await page.goto("https://hyperdrive-dev.aexp.com/");
+    const homePage = new HomePage(page);
+    await homePage.login("babu", "Hyperdrive@UI@5814");
+    await page.waitForLoadState("domcontentloaded");
+    await homePage.profile();
+    await homePage.selectConsumer();
+    await homePage.selectExistingConsumer();
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForTimeout(2000);
+    await homePage.clickDashboard();
+  });
+
+
+  // test("Verified Consumer Dashboard tab text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndashboardTab();
+  //   let actualMsg = await consumerDashboardPage.getConsumerDashboardTabText();
+  //   expect.soft(actualMsg).toContain("Consumer Dashboard");
+  // });
+
+
+  // test("Verified Add New Use Case tab text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndashboardTab();
+  //   let actualMsg = await consumerDashboardPage.getUseCaseNameText();
+  //   expect.soft(actualMsg).toContain("Add New Use Case");
+  // });
+  // test("Verified expandAllText text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndashboardTab();
+  //   let actualMsg = await consumerDashboardPage.getexpandAllText();
+  //   expect.soft(actualMsg).toContain("Expand All");
+  // });
+
+  // test("Verified collapseAllText text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndashboardTab();
+  //   let actualMsg = await consumerDashboardPage.getcollapseAllText();
+  //   expect.soft(actualMsg).toContain("Collapse");
+  // });
+
+  // test("Verified DOCUMENTATION tab text", async () => {
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOndocumentationTab();
+  //   let actualMsg = await consumerDashboardPage.getConsumerDocumentTabText();
+  //   expect.soft(actualMsg).toContain("DOCUMENTATION");
+  // });
+
+  // test("Verified add new constraint", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('#useCaseName').fill('babu3');
+  //   await page.locator('#multiselect-4').click();
+  //   await page.locator('#totalAmt').waitFor({ state: "visible" });
+  //   await page.locator('xpath=//label[normalize-space()="Revenue"]/..//label[normalize-space()="Revenue"]').check();
+  //   await page.locator('#totalAmt').waitFor({ state: "visible" });
+  //   await page.locator('#totalAmt').click();
+  //   await page.locator('#totalAmt').fill('5555');
+  //   await page.locator('#projectDetail').fill('https://hyperdrive-dev.aexp.com/')
+  //   await consumerDashboardPage.clickOnAddBtn();
+
+  //  });
+
+  //  test("Verified Add Use Case Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Add Use Case"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Add Use Case Under Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Please provide your use case details below. For ad")]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified Add identify Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Identification"]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified identify Under Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Enter details to help people identify this use cas")]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified Usecase  Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('#useCaseName')).toBeVisible();
+ 
+  //  });
+
+  
+  //  test("Verified Usecase Under Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Make your name as descriptive as possible so you c")]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified Experimental Mode Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Experimental Mode"]')).toBeVisible();
+ 
+  //  });
+
+  //  test("Verified Experimental Mode under Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Experimental use cases allow for rapid exploration")]')).toBeVisible();
+  //  });
+
+  //  test("Verified Use Case Impact Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Use Case Impact"]')).toBeVisible();
+
+  //  });
+
+  //  test("Verified Impact Categories Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//label[normalize-space()="Impact Categories"]')).toBeVisible();
+
+  //  });
+
+  //  test("Verified Annual Amount of Impact Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//label[normalize-space()="Annual Amount of Impact (in USD)"]')).toBeVisible();
+
+  //  });
+
+  //  test("Verified Dollar amount of impact Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[normalize-space()="Dollar amount of impact (in millions)"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Additional Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//h1[normalize-space()="Additional Details"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Please share links to your project Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Please share links to your project’s existing docu")]')).toBeVisible();
+  //  });
+
+  //  test("Verified Documentation Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//label[normalize-space()="Project Documentation"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Enter a link to your project Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Enter a link to your project’s documentation")]')).toBeVisible();
+  //  });
+  //  test("Verified projectDetail Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('#projectDetail')).toBeVisible();
+  //  });
+
+  //  test("Verified archDoc Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('#archDoc')).toBeVisible();
+  //  });
+
+  //  test("Verified Architecture Documentation part Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//label[normalize-space()="Architecture Documentation (Optional)"]')).toBeVisible();
+  //  });
+
+  //  test("Verified Enter a link to your project’s architecture Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await expect(page.locator('xpath=//p[contains(text(),"Enter a link to your project’s architecture docume")]')).toBeVisible();
+  //  });
+
+  //  test("Negative Name is too long Verified Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('#useCaseName').fill('babu3aadfadfasdfasdfasdfasdfasdfasdfasdfadsfasdffff');
+  //   await page.locator('#multiselect-4').click();
+  //   await expect(page.locator('xpath=//span[normalize-space()="Name is too long"]')).toBeVisible();
+  //  });
+
+   
+
+  //  test("Negative The value must be less than 10,000Text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('#useCaseName').fill('babu44');
+  //   await page.locator('#totalAmt').click();
+  //   await page.locator('#totalAmt').fill('55556767676')
+  //   await page.locator('#multiselect-4').click();
+  //   await expect(page.locator('xpath=//span[normalize-space()="The value must be less than 10,000."]')).toBeVisible();
+  //  });
+
+  //  test("Negative Please enter a correct link with ending .aexp.com text", async () => { 
+  //   const consumerDashboardPage = new ConsumerDashboardPage(page);
+  //   await consumerDashboardPage.clickOnAddNewUseCase();
+  //   await page.waitForLoadState("domcontentloaded");
+  //   await page.locator('#projectDetail').fill('https://mail.google.com/')
+  //   await page.locator('#totalAmt').click();
+  //   await expect(page.locator('xpath=//span[normalize-space()="Please enter a correct link with ending .aexp.com"]')).toBeVisible();
+  //  });
+  
+});
+//===========================================================================================
+
+import { test, expect } from "@playwright/test";
+class  ConsumerDashboardPage {
+  constructor(page) {
+    this.page = page;
+
+    this.addNewUseCaseloc = page.getByRole('button', { name: 'Add New Use Case' });
+    this.expandAll = page.getByRole('button', { name: 'Expand All' });
+    this.collapseAll =page.getByRole('button', { name: 'Collapse All' });
+    this.useCases = page.getByText('Use Cases');
+    this.consumerDashboardTextLoc = page.getByRole('heading', { name: 'Consumer Dashboard' });
+    this.logo = page.locator('#mainMenu').getByRole('link', { name: 'Logo' });
+    this.dashboard = page.getByRole('menuitem', { name: 'Dashboard' });
+    this.home = page.getByRole('menuitem', { name: 'Home' });
+    this.totalAmt = page.locator('#totalAmt');
+    this.viewUseCase =page.getByRole('button', { name: 'View Use Case', exact: true });
+    this.documentationLoc = page.getByRole('menuitem', { name: 'Documentation' });
+    this.saveBtn= page.locator('[data-testid="updateBtn"]');
+    this.cancelBtn= page.locator('xpath=//button[normalize-space()="Cancel"]');
+    this.useCaseNameLoc = page.locator('#useCaseName');
+    this.multiselect = page.locator('#multiselect-4');
+
+    this.totalAmt=page.locator('xpath=//input[@id="totalAmt"]');
+
+    this.multiselectOption = page.locator('xpath=//label[normalize-space()="Revenue"]/..//label[normalize-space()="Revenue"]');
+    this.multiselectOption1=page.locator('xpath=//label[normalize-space()="Revenue"]')
+    //this.multiselectOption = page.locator("xpath=//button[@id='multiselect-4']//following::label[normalize-space()='Efficiency / Cost Savings']");
+    this.projectDetail= page.locator('xpath=//input[@id="projectDetail"]');
+    this.Add = page.locator('xpath=//button[normalize-space()="Add"]');
+    
+    //label[normalize-space()='Revenue']/..//label[normalize-space()='Revenue']
+   //(useCaseName);"//span[normalize-space()='The value cannot be empty.']"undefined
+    
+  }
+
+  async clickOnhomeTab() {
+    await this.home.click();
+  }
+  async clickOndashboardTab() {
+    await this.dashboard.click();
+  }
+  async clickOndocumentationTab() {
+    await this.documentationLoc.click();
+  }
+  async clickOncollapseAllTab() {
+    await this.collapseAll.click();
+  }
+
+  async clickOnexpandAllTab() {
+    await this.expandAll.click();
+  }
+
+
+  
+  async getConsumerDashboardTabText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.consumerDashboardTextLoc.innerText();
+    console.log("Ingress ...........:  ", msg);
+    return msg;
+  }
+    
+  async getConsumerDocumentTabText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.documentationLoc.innerText();
+    console.log("Ingress ...........:  ", msg);
+    return msg;
+  }
+
+  async getUseCaseNameText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.addNewUseCaseloc.innerText();
+    console.log("Usecase..........:  ", msg);
+    return msg;
+  }
+
+  async getexpandAllText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.expandAll.innerText();
+    console.log("useCases ...........:  ", msg);
+    return msg;
+  }
+
+  async getcollapseAllText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.collapseAll.innerText();
+    console.log("useCases ...........:  ", msg);
+    return msg;
+  }
+
+  
+  async clickOnAddNewUseCase() {
+    await this.addNewUseCaseloc.click();
+  }
+
+
+  async addNewUseCase(
+
+    useCaseName,
+    impactCategoriesdropdown,
+    annualAmountofImpact,
+    projectDocumentation
+
+  ) {
+    await this.useCaseNameLoc.fill(useCaseName);
+    await this.multiselect.click();
+    await this.multiselectOption.selectOption(impactCategoriesdropdown);
+    await this.multiselectOption1.click();
+    await this.totalAmt.fill(annualAmountofImpact);
+    await this.projectDetail.fill(projectDocumentation);
+  }
+  
+  
+  async clickOnAddBtn() {
+    await this.Add.click();
+  }
+  async clickOnCancelBtn() {
+    await this.cancelBtn.click();
+  } 
+  
+}
+export default ConsumerDashboardPage;
+
+//===================================================================
+consumerDashboardPage.js
+import { test, expect } from "@playwright/test";
+class  ConsumerDashboardPage {
+  constructor(page) {
+    this.page = page;
+
+    this.addNewUseCaseloc = page.getByRole('button', { name: 'Add New Use Case' });
+    this.expandAll = page.getByRole('button', { name: 'Expand All' });
+    this.collapseAll =page.getByRole('button', { name: 'Collapse All' });
+    this.useCases = page.getByText('Use Cases');
+    this.consumerDashboardTextLoc = page.getByRole('heading', { name: 'Consumer Dashboard' });
+    this.logo = page.locator('#mainMenu').getByRole('link', { name: 'Logo' });
+    this.dashboard = page.getByRole('menuitem', { name: 'Dashboard' });
+    this.home = page.getByRole('menuitem', { name: 'Home' });
+    this.totalAmt = page.locator('#totalAmt');
+    this.viewUseCase =page.getByRole('button', { name: 'View Use Case', exact: true });
+    this.documentationLoc = page.getByRole('menuitem', { name: 'Documentation' });
+    this.saveBtn= page.locator('[data-testid="updateBtn"]');
+    this.cancelBtn= page.locator('xpath=//button[normalize-space()="Cancel"]');
+    this.useCaseNameLoc = page.locator('#useCaseName');
+    this.multiselect = page.locator('#multiselect-4');
+
+    this.totalAmt=page.locator('xpath=//input[@id="totalAmt"]');
+
+    this.multiselectOption = page.locator('xpath=//label[normalize-space()="Revenue"]/..//label[normalize-space()="Revenue"]');
+    this.multiselectOption1=page.locator('xpath=//label[normalize-space()="Revenue"]')
+    //this.multiselectOption = page.locator("xpath=//button[@id='multiselect-4']//following::label[normalize-space()='Efficiency / Cost Savings']");
+    this.projectDetail= page.locator('xpath=//input[@id="projectDetail"]');
+    this.Add = page.locator('xpath=//button[normalize-space()="Add"]');
+    
+    //label[normalize-space()='Revenue']/..//label[normalize-space()='Revenue']
+   //(useCaseName);"//span[normalize-space()='The value cannot be empty.']"undefined
+    
+  }
+
+  async clickOnhomeTab() {
+    await this.home.click();
+  }
+  async clickOndashboardTab() {
+    await this.dashboard.click();
+  }
+  async clickOndocumentationTab() {
+    await this.documentationLoc.click();
+  }
+  async clickOncollapseAllTab() {
+    await this.collapseAll.click();
+  }
+
+  async clickOnexpandAllTab() {
+    await this.expandAll.click();
+  }
+
+
+  
+  async getConsumerDashboardTabText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.consumerDashboardTextLoc.innerText();
+    console.log("Ingress ...........:  ", msg);
+    return msg;
+  }
+    
+  async getConsumerDocumentTabText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.documentationLoc.innerText();
+    console.log("Ingress ...........:  ", msg);
+    return msg;
+  }
+
+  async getUseCaseNameText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.addNewUseCaseloc.innerText();
+    console.log("Usecase..........:  ", msg);
+    return msg;
+  }
+
+  async getexpandAllText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.expandAll.innerText();
+    console.log("useCases ...........:  ", msg);
+    return msg;
+  }
+
+  async getcollapseAllText() {
+    await this.page.waitForLoadState("domcontentloaded");
+    let msg = await this.collapseAll.innerText();
+    console.log("useCases ...........:  ", msg);
+    return msg;
+  }
+
+  
+  async clickOnAddNewUseCase() {
+    await this.addNewUseCaseloc.click();
+  }
+
+
+  async addNewUseCase(
+
+    useCaseName,
+    impactCategoriesdropdown,
+    annualAmountofImpact,
+    projectDocumentation
+
+  ) {
+    await this.useCaseNameLoc.fill(useCaseName);
+    await this.multiselect.click();
+    await this.multiselectOption.selectOption(impactCategoriesdropdown);
+    await this.multiselectOption1.click();
+    await this.totalAmt.fill(annualAmountofImpact);
+    await this.projectDetail.fill(projectDocumentation);
+  }
+  
+  
+  async clickOnAddBtn() {
+    await this.Add.click();
+  }
+  async clickOnCancelBtn() {
+    await this.cancelBtn.click();
+  } 
+  
+}
+export default ConsumerDashboardPage;
+
+
+
